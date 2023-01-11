@@ -2,22 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_firebase_auth_crud_app/screens/signup.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    List images = [
+      "g.png",
+      "t.png",
+      "f.png",
+    ];
+
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
@@ -27,8 +26,19 @@ class _LoginPageState extends State<LoginPage> {
               height: h * 0.3,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("images/loginimg.png"),
-                    fit: BoxFit.cover),
+                    image: AssetImage("images/signup.png"), fit: BoxFit.cover),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: h * 0.16,
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Colors.white70,
+                    radius: 40,
+                    backgroundImage: AssetImage("images/profile1.png"),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -37,20 +47,6 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Hello",
-                    style: TextStyle(
-                      fontSize: 70,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Sign into your account",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.grey[500],
-                    ),
-                  ),
                   SizedBox(
                     height: 50,
                   ),
@@ -157,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: Center(
                 child: Text(
-                  "Sign in",
+                  "Sign up",
                   style: TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
@@ -166,27 +162,40 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            RichText(
+                text: TextSpan(
+              recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
+              text: "Have an account?",
+              style: TextStyle(fontSize: 20, color: Colors.grey[500]),
+            )),
             SizedBox(height: w * 0.08),
             RichText(
               text: TextSpan(
-                text: "Don\'t have an account?",
+                text: "Sign up using one of the following methods",
                 style: TextStyle(
                   color: Colors.grey[500],
                   fontSize: 20,
                 ),
-                children: [
-                  TextSpan(
-                    text: " Create",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    recognizer: TapGestureRecognizer()..onTap=()=>Get.to(()=>SignUpPage())
-                  ),
-                ],
               ),
-            )
+            ),
+            Wrap(
+              children: List<Widget>.generate(3, (index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.grey[500],
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage("images/" + images[index]),
+                    ),
+                  ),
+                );
+              }),
+            ),
           ],
         ));
   }
